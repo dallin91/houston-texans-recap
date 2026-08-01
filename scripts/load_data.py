@@ -20,6 +20,10 @@ player_df.columns = player_df.columns.str.strip().str.lower().str.replace(' ', '
 team_df = pd.read_csv("./data/raw/hou_stats.csv")
 team_df.columns = team_df.columns.str.strip().str.lower().str.replace(' ', '_')
 
+schedule_df = pd.read_csv("./data/raw/hou_schedules.csv")
+schedule_df.columns = schedule_df.columns.str.strip().str.lower().str.replace(' ', '_')
+
 # Load data to database
 player_df.to_sql('player_stats', engine, if_exists='replace', index=False)
 team_df.to_sql('team_stats', engine, if_exists='replace', index=False)
+schedule_df.to_sql('schedule_stats', engine, if_exists='replace', index=False)
