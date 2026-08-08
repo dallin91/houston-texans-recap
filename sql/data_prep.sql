@@ -30,3 +30,28 @@ div_game, roof, surface, temp, wind
 FROM schedule_stats
 WHERE away_score IS NOT NULL
 ORDER BY gameday;
+
+
+DROP VIEW IF EXISTS texans_player_stats;
+
+CREATE VIEW texans_player_stats
+AS
+SELECT player_id, player_display_name AS player_name, position, game_id,
+completions, attempts, passing_epa, passing_cpoe, passing_yards, passing_tds, passing_interceptions, sacks_suffered, pacr,
+carries, rushing_yards, rushing_epa, rushing_tds, rushing_fumbles,
+receptions, targets, receiving_yards, receiving_epa, target_share, wopr,
+def_sacks, def_interceptions, def_tackles_for_loss, def_qb_hits, def_pass_defended, def_fumbles
+FROM player_stats;
+
+
+DROP VIEW IF EXISTS texans_team_stats;
+
+CREATE VIEW texans_team_stats
+AS
+SELECT game_id, season_type,
+passing_epa, passing_cpoe, passing_tds, passing_interceptions, sacks_suffered, passing_yards,
+carries, rushing_yards, rushing_tds, rushing_epa,
+receiving_epa, receiving_yards,
+def_sacks, def_interceptions, def_tackles_for_loss, def_qb_hits, def_pass_defended,
+fumbles_lost_total, penalties, penalty_yards, timeouts
+FROM team_stats;
