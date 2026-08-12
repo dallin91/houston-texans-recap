@@ -27,7 +27,7 @@ pbp_df = pd.read_csv("./data/raw/hou_pbp.csv")
 pbp_df.columns = pbp_df.columns.str.strip().str.lower().str.replace(' ', '_')
 
 # Load data to database
-player_df.to_sql('player_stats', engine, if_exists='replace', index=False)
-team_df.to_sql('team_stats', engine, if_exists='replace', index=False)
-schedule_df.to_sql('schedule_stats', engine, if_exists='replace', index=False)
-pbp_df.to_sql('pbp_stats', engine, if_exists='replace', index=False)
+player_df.to_sql('player_stats', engine, if_exists='delete_rows', index=False)
+team_df.to_sql('team_stats', engine, if_exists='delete_rows', index=False)
+schedule_df.to_sql('schedule_stats', engine, if_exists='delete_rows', index=False)
+pbp_df.to_sql('pbp_stats', engine, if_exists='delete_rows', index=False)
