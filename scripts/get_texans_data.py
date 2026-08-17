@@ -23,4 +23,11 @@ hou_schedules.write_csv("./data/raw/hou_schedules.csv")
 # Pull and write Texans play-by-play data to CSV
 pbp = nfl.load_pbp(seasons=[2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025])
 hou_pbp = pbp.filter((pl.col("posteam") == "HOU") | (pl.col("defteam") == "HOU"))
+pbp_columns = [
+    "game_id", "season", "week", "qtr", "play_id",
+    "posteam", "defteam", "drive",
+    "down", "ydstogo", "yardline_100",
+    "play_type", "touchdown", "epa",
+]
+hou_pbp = hou_pbp.select(pbp_columns)
 hou_pbp.write_csv("./data/raw/hou_pbp.csv")
