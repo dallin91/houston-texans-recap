@@ -27,7 +27,10 @@ pbp_columns = [
     "game_id", "season", "week", "qtr", "play_id",
     "posteam", "defteam", "drive",
     "down", "ydstogo", "yardline_100",
-    "play_type", "touchdown", "epa",
+    "play_type", "pass_attempt", "rush_attempt", "qb_dropback",
+    "touchdown", "pass_touchdown", "rush_touchdown", "epa",
+    "score_differential", "wp", "passer_player_id", "passer_player_name",
+    "interception", "fumble_lost", "success", 
 ]
 hou_pbp = hou_pbp.select(pbp_columns)
 hou_pbp.write_csv("./data/raw/hou_pbp.csv")
