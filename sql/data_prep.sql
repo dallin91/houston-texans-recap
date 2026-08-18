@@ -154,3 +154,36 @@ SELECT
 FROM offense_epa o
 JOIN defense_epa d ON o.season = d.season
 ORDER BY o.season;
+
+
+DROP VIEW IF EXISTS texans_season_summary;
+
+CREATE VIEW texans_season_summary
+AS
+WITH season_record AS (
+    SELECT
+        season,
+        COUNT(*) FILTER (WHERE game_type = 'REG') AS games_played,
+        COUNT(*) FILTER (WHERE game_type = 'REG' AND result = 'win') AS wins,
+        ROUND(
+            COUNT(*) FILTER (WHERE game_type = 'REG' AND result = 'win')::numeric
+            / NULLIF(COUNT(*) FILTER (WHERE game_type = 'REG'), 0), 3
+        ) AS win_pct,
+        MAX(CASE WHEN game_type != 'REG' THEN 1 ELSE 0 END) AS made_playoffs
+    FROM texans_results
+    GROUP BY season
+)
+SELECT
+    sr.season,
+    sr.games_played,
+    sr.wins,
+    sr.win_pct,
+    sr.made_playoffs,
+    tm.turnover_margin,
+    rz.redzone_td_pct_differential,
+    epa.epa_differential
+FROM season_record sr
+JOIN texans_turnover_margin tm ON sr.season = tm.season
+JOIN texans_redzone_stats rz   ON sr.season = rz.season
+JOIN texans_epa_allowed epa    ON sr.season = epa.season
+ORDER BY sr.season;
